@@ -1,13 +1,12 @@
 import streamlit as st
-from langchain.prompts.prompt import PromptTemplate  # type: ignore
+from langchain.prompts import PromptTemplate  # type: ignore
 from langchain_ollama import ChatOllama  # type: ignore
 from langchain_core.output_parsers import StrOutputParser  # type: ignore
 
-host = "https://textgenerator.streamlit.app/"
 st.set_page_config(
     page_title="Text Generator",
     page_icon="favicon.ico",  # Replace with your favicon path
-    layout="centered"
+    layout="centered"  # or "wide"
 )
 
 st.title("Text Generation App 🤖✍️")
@@ -21,12 +20,7 @@ if st.button("Generate Text"):
         
         text_template_prompt = PromptTemplate(input_variable=['prompt'], template=text_template)
 
-        # Replace with your actual LLM service details
-        host = "your_llm_service_url"  # e.g., "http://api.example.com"
-        port = 5000  # This is optional if you include the port in the URL
-
-        # Initialize the LLM
-        llm = ChatOllama(temperature=1, model="llama3.1", host=host)
+        llm = ChatOllama(temperature=1, model="llama3.1")
 
         chain = text_template_prompt | llm | StrOutputParser()
 
